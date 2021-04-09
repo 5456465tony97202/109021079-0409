@@ -1,6 +1,8 @@
 import requests
 import time
 from bs4 import BeautifulSoup
+import csv
+
 
 URL="https://www.majortests.com/word-lists/word-list-0{0}.html"
 
@@ -48,7 +50,16 @@ def web_scraping_bot(urls):
            print("HTTP request error!!")
     return eng_words
 
+def save_to_csv(words,file):
+    with open(file,"w+",newline="", encoding="utf-8") as fp:
+        writer=csv.writer(fp)
+        for word in words:
+            writer.writerow(word)
+
+
 if __name__=="__main__":
    urls=generate_urls(URL,1,10) #求的資料1~n+1
    eng_words=web_scraping_bot(urls)
-   print(eng_words)
+   for item in eng_words:
+       print(item)
+   save_to_csv(eng_words, "engWordList 1.csv")
